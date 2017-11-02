@@ -4,7 +4,7 @@ import Player from './components/players'
 import Stamina from './components/stamina'
 import AttackButton from './components/attack'
 import Restart from './components/restart'
-
+import Title from './components/title'
 
 class App extends Component {
   constructor () {
@@ -25,47 +25,52 @@ class App extends Component {
   render() {
     return (
       <div className="container-fluid">
-        <div className='p1'>
-          <Player playerName={this.state.playerOne.name} />
-          <Stamina stamina={this.state.playerOne.stamina} />
-          <AttackButton attack={() => {
-            if (this.state.playerTwo.stamina === 0) { return alert('John Doe Ganhou!')} 
-              this.setState({ 
-                playerTwo: { 
-                  stamina: this.state.playerTwo.stamina - 20,
-                  name: this.state.playerTwo.name
-                } 
+        <Title />
+        <div className='players'>
+          <div className='p1'>
+            <Player playerName={this.state.playerOne.name} />
+            <Stamina stamina={this.state.playerOne.stamina} />
+            <AttackButton attack={() => {
+              if (this.state.playerTwo.stamina === 0) { return alert('John Doe Ganhou!')} 
+                this.setState({ 
+                  playerTwo: { 
+                    stamina: this.state.playerTwo.stamina - 20,
+                    name: this.state.playerTwo.name
+                  } 
+                })
+              }} 
+            />
+          </div>
+          <div className='p2'>
+            <Player playerName={this.state.playerTwo.name} />
+            <Stamina stamina={this.state.playerTwo.stamina} />
+            <AttackButton attack={() => {
+              if (this.state.playerOne.stamina === 0) { return alert('Jane Doe Ganhou!') }
+              this.setState({
+                playerOne: {
+                  stamina: this.state.playerOne.stamina - 20,
+                  name: this.state.playerOne.name
+                }
               })
-            }} 
-          />
+            }}
+            />
+          </div>
         </div>
-        <div className='p2'>
-          <Player playerName={this.state.playerTwo.name} />
-          <Stamina stamina={this.state.playerTwo.stamina} />
-          <AttackButton attack={() => {
-            if (this.state.playerOne.stamina === 0) { return alert('Jane Doe Ganhou!') }
-            this.setState({
+        <div className='restart'>
+          <Restart restart={() => {
+            this.setState({ 
+              playerTwo: { 
+                stamina: 100,
+                name: this.state.playerTwo.name
+              }, 
               playerOne: {
-                stamina: this.state.playerOne.stamina - 20,
+                stamina: 100,
                 name: this.state.playerOne.name
-              }
+              }  
             })
-          }}
+            }}
           />
         </div>
-        <Restart restart={() => {
-          this.setState({ 
-            playerTwo: { 
-              stamina: 100,
-              name: this.state.playerTwo.name
-            }, 
-            playerOne: {
-              stamina: 100,
-              name: this.state.playerOne.name
-            }  
-          })
-          }}
-        />
       </div> 
     )
   }
